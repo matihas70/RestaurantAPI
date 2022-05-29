@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace RestaurantAPI.Controllers
+namespace RestaurantAPI
 {
     [ApiController]
     [Route("[controller]")]
@@ -18,6 +18,8 @@ namespace RestaurantAPI.Controllers
         [HttpGet]
         public ActionResult<string> Get()
         {
+            RestaurantsDataBase.connect();
+
             string result = _service.Get();
             return Ok(result);
         }
