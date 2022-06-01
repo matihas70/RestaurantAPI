@@ -1,4 +1,7 @@
-﻿namespace RestaurantAPI
+﻿using System.Data.SqlClient;
+
+
+namespace RestaurantAPI
 {
     public class RestaurantsListService : IRestaurantsListService
     {
@@ -6,6 +9,11 @@
         {
             string result = "Hello user";
             return result;
+        }
+
+        public string Post(Address address, Restaurant restaurant)
+        {
+           return RestaurantsDataBase.connectAndPost(address, restaurant);
         }
     }
 }

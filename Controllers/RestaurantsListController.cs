@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace RestaurantAPI
 {
@@ -18,9 +19,24 @@ namespace RestaurantAPI
         [HttpGet]
         public ActionResult<string> Get()
         {
-            RestaurantsDataBase.connect();
+            RestaurantsDataBase.connectAndGet();
 
             string result = _service.Get();
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public ActionResult<string> Post([FromBody] object restaurantJSON)
+        {
+
+            string restaurantstring = restaurantJSON.ToString();
+
+            Restaurant restaurant = JsonConvert.DeserializeObject<Restaurant>(restaurantstring);
+
+            Address address = restaurant.address;
+
+            string result = _service.Post(address, restaurant);
+
             return Ok(result);
         }
     }
