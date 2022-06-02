@@ -4,19 +4,40 @@ namespace RestaurantAPI
     static public class RestaurantsDataBase
     {
         private const string ConnectionString = "Server = localhost\\SQLEXPRESS;Database = RestaurantsDB;Trusted_Connection=True;";
-        static private int maxAddressId { get; set; }
-        static public void connectAndGet()
+        static public List<Restaurant> connectAndGet()
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 Console.WriteLine("CONNECTED");
 
-                string sql = "SELECT * FROM Restaurants";
-                SqlCommand cmd = new SqlCommand(sql, connection);
-                var reader = cmd.ExecuteReader();
-                reader.Close();
-                
+                string sql = "SELECT Restaurants.restaurant_id, Restaurants.name, Restaurants.category, Restaurants.email, Addresses.address_id, Addresses.city, Addresses.street, Addresses.postal_code FROM Restaurants INNER JOIN Addresses ON Restaurants.address = Addresses.address_id";
+
+                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        List<Restaurant> restaurants = new List<Restaurant>();
+
+                        while (reader.Read())
+                        {
+                            int restaurant_id = int.Parse(reader["restaurant_id"].ToString()),
+                                address_id = int.Parse(reader["address_id"].ToString());
+
+                            string name = reader["name"].ToString(),
+                                   category = reader["category"].ToString(),
+                                   email = reader["email"].ToString(),
+                                   city = reader["city"].ToString(),
+                                   street = reader["street"].ToString(),
+                                   postal_code = reader["postal_code"].ToString();
+
+                            restaurants.Add(new Restaurant(name, category, email,
+                                            new Address(city, street, postal_code, address_id),
+                                            restaurant_id));
+                        }
+                        return restaurants;
+                    }
+                }
             }
         }
         static public string connectAndPost(Address address, Restaurant restaurant)
