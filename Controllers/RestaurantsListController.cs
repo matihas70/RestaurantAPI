@@ -27,7 +27,7 @@ namespace RestaurantAPI
         [HttpGet("restaurants")]
         public ActionResult<List<Restaurant>> Get2()
         {
-            return Ok(RestaurantsDataBase.connectAndGet());
+            return Ok(_service.Get2());
         }
 
         [HttpPost]

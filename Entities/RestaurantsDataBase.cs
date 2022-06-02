@@ -4,7 +4,8 @@ namespace RestaurantAPI
     static public class RestaurantsDataBase
     {
         private const string ConnectionString = "Server = localhost\\SQLEXPRESS;Database = RestaurantsDB;Trusted_Connection=True;";
-        static public List<Restaurant> connectAndGet()
+
+        static public List<Restaurant> GetRestaurantsList()
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {

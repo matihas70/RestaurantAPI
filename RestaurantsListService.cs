@@ -11,6 +11,11 @@ namespace RestaurantAPI
             return result;
         }
 
+        public IEnumerable<Restaurant> Get2()
+        {
+            return RestaurantsDataBase.GetRestaurantsList();
+        }
+
         public string Post(Address address, Restaurant restaurant)
         {
            return RestaurantsDataBase.connectAndPost(address, restaurant);
