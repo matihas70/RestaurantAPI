@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace RestaurantAPI
 {
@@ -20,8 +19,8 @@ namespace RestaurantAPI
         [HttpGet]
         public ActionResult<string> Get()
         {
-            string result = _service.Get();
-            return Ok(result);
+
+            return Ok(_service.Get());
         }
 
         [HttpGet("restaurants")]
@@ -31,7 +30,7 @@ namespace RestaurantAPI
         }
 
         [HttpPost]
-        public ActionResult<string> Post([FromBody] JObject restaurantJSON)
+        public ActionResult<string> Post([FromBody] object restaurantJSON)
         {
 
             string restaurantstring = restaurantJSON.ToString();
