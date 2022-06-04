@@ -5,12 +5,12 @@ namespace RestaurantAPI
 {
     [ApiController]
     [Route("[controller]")]
-    public class RestaurantsListController : Controller
+    public class RestaurantAPIController : Controller
     {
-        private readonly ILogger<RestaurantsListController> _logger;
+        private readonly ILogger<RestaurantAPIController> _logger;
         private readonly IRestaurantsListService _service;
 
-        public RestaurantsListController(ILogger<RestaurantsListController> logger, IRestaurantsListService service)
+        public RestaurantAPIController(ILogger<RestaurantAPIController> logger, IRestaurantsListService service)
         {
             _logger = logger;
             _service = service;
@@ -29,7 +29,7 @@ namespace RestaurantAPI
             return Ok(_service.Get2());
         }
 
-        [HttpPost]
+        [HttpPost("addRestaurant")]
         public ActionResult<string> Post([FromBody] object restaurantJSON)
         {
 
