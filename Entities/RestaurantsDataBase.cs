@@ -41,6 +41,7 @@ namespace RestaurantAPI
                 }
             }
         }
+
         static public string connectAndPost(Address address, Restaurant restaurant)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -48,7 +49,7 @@ namespace RestaurantAPI
                 connection.Open();
                 Console.WriteLine("CONNECTED");
 
-                //Sprawdzam czy podany adres już istnieje
+                //checking if address already exist
                 string sql = $"SELECT * FROM Addresses WHERE city = '{address.city}' AND street = '{address.street}'";
 
                 using (SqlCommand cmd = new SqlCommand(sql, connection))
@@ -61,7 +62,6 @@ namespace RestaurantAPI
                         }
                     }
                 }
-
 
                 sql = $"INSERT INTO Addresses VALUES ('{address.city}', '{address.street}', '{address.postal_code}')";
 
@@ -114,25 +114,13 @@ namespace RestaurantAPI
 
                 using (SqlCommand cmd = new SqlCommand(sql, connection))
                 {
-                    try
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                Console.WriteLine(reader[0]);
-                            }
-  
-                            return "Usunięto restaurację"; 
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.ToString);
-                        return "Nie ma restauracji o tym id";
+                        return "Usunięto restaurację";   
                     }
                 }
             }
         }
     }
 }
+
