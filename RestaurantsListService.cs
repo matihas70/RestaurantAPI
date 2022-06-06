@@ -20,5 +20,10 @@ namespace RestaurantAPI
         {
            return RestaurantsDataBase.connectAndPost(address, restaurant);
         }
+
+        public string Delete(int id)
+        {
+            return RestaurantsDataBase.connectAndDelete(id);
+        }
     }
 }

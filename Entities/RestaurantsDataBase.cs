@@ -71,7 +71,7 @@ namespace RestaurantAPI
                     {
                         if (reader.Read())
                         {
-                            ResponseFromDataBase.LastAddressId = int.Parse(reader["id"].ToString());
+                            ResponseFromDataBase.LastAddressId = int.Parse(reader["address_id"].ToString());
                         }
                     }
                     
@@ -90,6 +90,49 @@ namespace RestaurantAPI
             }
         }
 
+        static public string connectAndDelete(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                Console.WriteLine("CONNECTED");
 
+                string sql = $"SELECT name FROM Restaurants WHERE restaurant_id = {id}";
+
+                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read() == false)
+                        {
+                            return "Nie ma restauracji o tym id";
+                        }
+                    }
+                }
+
+                sql = $"DELETE Restaurants WHERE restaurant_id = {id}";
+
+                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                {
+                    try
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                Console.WriteLine(reader[0]);
+                            }
+  
+                            return "Usunięto restaurację"; 
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString);
+                        return "Nie ma restauracji o tym id";
+                    }
+                }
+            }
+        }
     }
 }

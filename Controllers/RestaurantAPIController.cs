@@ -24,7 +24,7 @@ namespace RestaurantAPI
         }
 
         [HttpGet("restaurants")]
-        public ActionResult<List<Restaurant>> Get2()
+        public ActionResult<IEnumerable<Restaurant>> Get2()
         {
             return Ok(_service.Get2());
         }
@@ -52,6 +52,12 @@ namespace RestaurantAPI
             string result = _service.Post(address, restaurant);
 
             return Ok(result);
+        }
+
+        [HttpDelete("removeRestaurant")]
+        public ActionResult<string> Delete([FromQuery] int id)
+        {
+            return Ok(_service.Delete(id));
         }
     }
 }
