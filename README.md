@@ -1,7 +1,8 @@
 # RestaurantAPI
 Data base structure:
 - Tables:
-  - Addresses: ![obraz](https://user-images.githubusercontent.com/104222527/172221793-25da99df-9b7e-4677-b0e4-a3055d3c44b6.png)
+  - Addresses: ![obraz](https://user-images.githubusercontent.com/104222527/172222645-60878e8b-728d-44e0-b070-a425f68ccc24.png)
+
 
   - Restaurants: ![obraz](https://user-images.githubusercontent.com/104222527/172221333-a4428368-a2e7-47e9-9622-c62d2ce0cc87.png)
   - Dishes:
