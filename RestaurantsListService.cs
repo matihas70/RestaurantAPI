@@ -16,9 +16,14 @@ namespace RestaurantAPI
             return RestaurantsDataBase.GetRestaurantsList();
         }
 
-        public string Post(Address address, Restaurant restaurant)
+        public string PostRestaurant(Address address, Restaurant restaurant)
         {
-           return RestaurantsDataBase.connectAndPost(address, restaurant);
+           return RestaurantsDataBase.connectAndPostRestaurant(address, restaurant);
+        }
+
+        public string PostDish(Dish dish, int id)
+        {
+            return RestaurantsDataBase.connectAndPostDish(dish, id);
         }
 
         public string Delete(int id)

@@ -30,7 +30,7 @@ namespace RestaurantAPI
         }
 
         [HttpPost("addRestaurant")]
-        public ActionResult<string> Post([FromBody] object restaurantJSON)
+        public ActionResult<string> PostRestaurant([FromBody] object restaurantJSON)
         {
 
             string restaurantstring = restaurantJSON.ToString();
@@ -49,9 +49,25 @@ namespace RestaurantAPI
                 return BadRequest("Podaj poprawne dane restauracji");
             }
 
-            string result = _service.Post(address, restaurant);
+            string result = _service.PostRestaurant(address, restaurant);
 
             return Ok(result);
+        }
+
+        [HttpPost("addDish")]
+        public ActionResult<string> PostDish([FromBody] object dishJSON, [FromQuery] int id)
+        {
+            Dish dish = JsonConvert.DeserializeObject<Dish>(dishJSON.ToString());
+
+            if(dish.name == null || dish.type == null || dish.price == 0)
+            {
+                return BadRequest("Podaj poprawne informacje o potrawie");
+            }
+            else if(id == 0)
+            {
+                return BadRequest("Podaj poprawne id Restauracji");
+            }
+            return Ok(_service.PostDish(dish, id));
         }
 
         [HttpDelete("removeRestaurant")]

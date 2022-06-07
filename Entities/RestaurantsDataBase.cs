@@ -42,7 +42,7 @@ namespace RestaurantAPI
             }
         }
 
-        static public string connectAndPost(Address address, Restaurant restaurant)
+        static public string connectAndPostRestaurant(Address address, Restaurant restaurant)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -74,17 +74,65 @@ namespace RestaurantAPI
                             ResponseFromDataBase.LastAddressId = int.Parse(reader["address_id"].ToString());
                         }
                     }
-                    
+
                 }
-                
+
                 sql = $"INSERT INTO Restaurants VALUES ('{restaurant.name}', '{restaurant.category}', '{restaurant.email}', {ResponseFromDataBase.LastAddressId})";
                 ResponseFromDataBase.LastAddressId = 0;
 
+                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        return "Dodano restauracje";
+                    }
+                }
+            }
+        }
+
+        static public string connectAndPostDish(Dish dish, int id)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                Console.WriteLine("CONNECTED");
+
+                string sql = $"SELECT name FROM Restaurants WHERE restaurant_id = {id}";
+
+                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read() == false)
+                        {
+                            return "Nie ma restauracji o tym id";
+                        }
+                    }
+                }
+
+                sql = $"SELECT * FROM Dishes WHERE name = {dish.name} AND restaurant = {id}";
+                
                 using(SqlCommand cmd = new SqlCommand(sql, connection))
                 {
                     using(var reader = cmd.ExecuteReader())
                     {
-                        return "Dodano restauracje";
+                        if(reader.Read())
+                        {
+                            return "W tej restauracji jest już ta potrawa";
+                        }
+                    }
+                }
+
+                int intiger = (int)dish.price;
+                int dec = (int)(100 * (dish.price - intiger));
+
+                sql = $"INSERT INTO Dishes VALUES('{dish.name}', '{dish.type}', {intiger}.{dec}, {id})";
+    
+                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        return "Dodano potrawę";
                     }
                 }
             }
@@ -116,7 +164,7 @@ namespace RestaurantAPI
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        return "Usunięto restaurację";   
+                        return "Usunięto restaurację";
                     }
                 }
             }
