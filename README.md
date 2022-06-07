@@ -3,9 +3,9 @@ Data base structure:
 - Tables:
   - Addresses: ![obraz](https://user-images.githubusercontent.com/104222527/172222645-60878e8b-728d-44e0-b070-a425f68ccc24.png)
 
-
   - Restaurants: ![obraz](https://user-images.githubusercontent.com/104222527/172221333-a4428368-a2e7-47e9-9622-c62d2ce0cc87.png)
-  - Dishes:
+
+  - Dishes: ![obraz](https://user-images.githubusercontent.com/104222527/172447742-fbf99bdc-6945-48bb-aa84-8210e7cca43c.png)
 
 Endpoints: 
 
@@ -14,7 +14,7 @@ Endpoints:
   - "restaurants": Returns all restaurants from data base as JSON
 
 - POST
-  - "addRestaurant": Takes informations about restaurant from request body as JSON. Template:
+  - "addRestaurant": It gets informations about restaurant from request body as JSON. Template:
 ```
 {
     "id": 0,
@@ -30,5 +30,15 @@ Endpoints:
 }
 ```
 Id has to be "0", it will get the right id in data base automatically. There is a trigger in data base which returns id given to the address. This id is set as a foreign key for the restaurant.
+  - "addDish?id=<restaurant_id>": It gets informations about dish from request body as JSON, and id of restaurant where dish is served from query. Request body template:
+```
+{
+    "id": 0,
+    "name": "<name>",
+    "type": "<type>",
+    "price": <price>,
+    "restaurant": null
+}
+```
 - DELETE
-  - It has to be send id of wanted restaurant to remove. its taken from query "id". There is a trigger in data base which remove removed restaurant address.
+  - It get id from query "id". There is a trigger in data base which remove removed restaurant address.
