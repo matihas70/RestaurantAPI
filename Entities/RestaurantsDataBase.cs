@@ -110,7 +110,7 @@ namespace RestaurantAPI
                     }
                 }
 
-                sql = $"SELECT * FROM Dishes WHERE name = {dish.name} AND restaurant = {id}";
+                sql = $"SELECT dish_id FROM Dishes WHERE name = '{dish.name}' AND restaurant = {id}";
                 
                 using(SqlCommand cmd = new SqlCommand(sql, connection))
                 {
