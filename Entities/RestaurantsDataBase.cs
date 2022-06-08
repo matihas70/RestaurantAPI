@@ -111,12 +111,12 @@ namespace RestaurantAPI
                 }
 
                 sql = $"SELECT dish_id FROM Dishes WHERE name = '{dish.name}' AND restaurant = {id}";
-                
-                using(SqlCommand cmd = new SqlCommand(sql, connection))
+
+                using (SqlCommand cmd = new SqlCommand(sql, connection))
                 {
-                    using(var reader = cmd.ExecuteReader())
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        if(reader.Read())
+                        if (reader.Read())
                         {
                             return "W tej restauracji jest już ta potrawa";
                         }
@@ -127,7 +127,7 @@ namespace RestaurantAPI
                 int dec = (int)(100 * (dish.price - intiger));
 
                 sql = $"INSERT INTO Dishes VALUES('{dish.name}', '{dish.type}', {intiger}.{dec}, {id})";
-    
+
                 using (SqlCommand cmd = new SqlCommand(sql, connection))
                 {
                     using (var reader = cmd.ExecuteReader())
@@ -138,14 +138,25 @@ namespace RestaurantAPI
             }
         }
 
-        static public string connectAndDelete(int id)
+        static public string connectAndDelete<T>(int id, T obj)
         {
+            string[] describe = new string[4];
+
+            if(obj.GetType().ToString() == "Restaurant")
+            {
+                describe = new string[4] { "Restaurants", "restaurant_id", "restauracji", "restaurację"};
+            }
+            else if (obj.GetType().ToString() == "Dish")
+            {
+                describe = new string[4] { "Dishes", "dish_id", "potrawy", "potrawę" };
+            }
+
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 Console.WriteLine("CONNECTED");
 
-                string sql = $"SELECT name FROM Restaurants WHERE restaurant_id = {id}";
+                string sql = $"SELECT name FROM {describe[0]} WHERE {describe[1]} = {id}";
 
                 using (SqlCommand cmd = new SqlCommand(sql, connection))
                 {
@@ -153,18 +164,18 @@ namespace RestaurantAPI
                     {
                         if (reader.Read() == false)
                         {
-                            return "Nie ma restauracji o tym id";
+                            return $"Nie ma {describe[2]} o tym id";
                         }
                     }
                 }
 
-                sql = $"DELETE Restaurants WHERE restaurant_id = {id}";
+                sql = $"DELETE {describe[0]} WHERE {describe[1]} = {id}";
 
                 using (SqlCommand cmd = new SqlCommand(sql, connection))
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        return "Usunięto restaurację";
+                        return $"Usunięto {describe[3]}";
                     }
                 }
             }

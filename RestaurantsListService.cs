@@ -26,9 +26,17 @@ namespace RestaurantAPI
             return RestaurantsDataBase.connectAndPostDish(dish, id);
         }
 
-        public string Delete(int id)
+        public string DeleteRestaurant(int id)
         {
-            return RestaurantsDataBase.connectAndDelete(id);
+            Restaurant restaurant = null;
+
+            return RestaurantsDataBase.connectAndDelete<Restaurant>(id, restaurant);
+        }
+        public string DeleteDish(int id)
+        {
+            Dish dish = null;
+
+            return RestaurantsDataBase.connectAndDelete<Dish>(id, dish);
         }
     }
 }

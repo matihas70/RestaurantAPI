@@ -71,9 +71,15 @@ namespace RestaurantAPI
         }
 
         [HttpDelete("removeRestaurant")]
-        public ActionResult<string> Delete([FromQuery] int id)
+        public ActionResult<string> DeleteRestaurant([FromQuery] int id)
         {
-            return Ok(_service.Delete(id));
+            return Ok(_service.DeleteRestaurant(id));
+        }
+
+        [HttpDelete("removeDish")]
+        public ActionResult<string> DeleteDish([FromQuery] int id)
+        {
+            return Ok(_service.DeleteDish(id));
         }
     }
 }

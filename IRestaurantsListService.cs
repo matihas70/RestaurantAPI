@@ -6,6 +6,7 @@
         public IEnumerable<Restaurant> Get2();
         public string PostRestaurant(Address address, Restaurant restaurant);
         public string PostDish(Dish dish, int id);
-        public string Delete(int id);
+        public string DeleteRestaurant(int id);
+        public string DeleteDish(int id);
     }
 }
