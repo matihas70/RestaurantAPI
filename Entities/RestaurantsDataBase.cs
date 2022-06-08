@@ -138,15 +138,17 @@ namespace RestaurantAPI
             }
         }
 
-        static public string connectAndDelete<T>(int id, T obj)
+        static public string connectAndDelete(int id, string toDelete)
         {
+            toDelete = toDelete.ToLower();
+
             string[] describe = new string[4];
 
-            if(obj.GetType().ToString() == "Restaurant")
+            if(toDelete == "restaurant")
             {
                 describe = new string[4] { "Restaurants", "restaurant_id", "restauracji", "restaurację"};
             }
-            else if (obj.GetType().ToString() == "Dish")
+            else if (toDelete == "dish")
             {
                 describe = new string[4] { "Dishes", "dish_id", "potrawy", "potrawę" };
             }
