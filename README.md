@@ -1,4 +1,6 @@
 # RestaurantAPI
+The application store informations about restaurants. It allows to create new restaurants, dishes, and download informations from database.
+
 Data base structure:
 - Tables:
   - Addresses: ![obraz](https://user-images.githubusercontent.com/104222527/172222645-60878e8b-728d-44e0-b070-a425f68ccc24.png)
