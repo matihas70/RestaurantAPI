@@ -10,8 +10,9 @@ Data base structure:
 Endpoints: 
 
 - GET: 
-  - default: Say "Hello user"
-  - "restaurants": Returns all restaurants from data base as JSON
+  - default: Say "Hello user".
+  - "restaurants": Returns all restaurants from data base as JSON.
+  - "dishes?id=<restaurant_id>": Returns all dishes in restaurant that id is in query.
 
 - POST
   - "addRestaurant": It gets informations about restaurant from request body as JSON. Template:
