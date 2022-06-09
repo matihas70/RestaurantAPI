@@ -16,6 +16,7 @@ namespace RestaurantAPI
             _service = service;
         }
 
+
         [HttpGet]
         public ActionResult<string> Get()
         {
@@ -23,11 +24,13 @@ namespace RestaurantAPI
             return Ok(_service.Get());
         }
 
+
         [HttpGet("restaurants")]
         public ActionResult<IEnumerable<Restaurant>> GetRestaurants()
         {
             return Ok(_service.GetRestaurants());
         }
+
 
         [HttpGet("dishes")]
         public ActionResult<IEnumerable<Dish>> GetDishes([FromQuery]int id)
@@ -61,6 +64,7 @@ namespace RestaurantAPI
             return Ok(result);
         }
 
+
         [HttpPost("addDish")]
         public ActionResult<string> PostDish([FromBody] object dishJSON, [FromQuery] int id)
         {
@@ -77,11 +81,13 @@ namespace RestaurantAPI
             return Ok(_service.PostDish(dish, id));
         }
 
+
         [HttpDelete("removeRestaurant")]
         public ActionResult<string> DeleteRestaurant([FromQuery] int id)
         {
             return Ok(_service.DeleteRestaurant(id));
         }
+
 
         [HttpDelete("removeDish")]
         public ActionResult<string> DeleteDish([FromQuery] int id)
