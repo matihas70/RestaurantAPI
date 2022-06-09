@@ -41,4 +41,5 @@ Id has to be "0", it will get the right id in data base automatically. There is 
 }
 ```
 - DELETE
-  - It get id from query "id". There is a trigger in data base which remove removed restaurant address.
+  - "removeRestaurant?id=<restaurant_id>" It get id from query "id". There is a trigger in data base which remove removed restaurant address.
+  - "removeDish?id=<dish_id>" It get id from query "id".
