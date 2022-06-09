@@ -24,10 +24,17 @@ namespace RestaurantAPI
         }
 
         [HttpGet("restaurants")]
-        public ActionResult<IEnumerable<Restaurant>> Get2()
+        public ActionResult<IEnumerable<Restaurant>> GetRestaurants()
         {
-            return Ok(_service.Get2());
+            return Ok(_service.GetRestaurants());
         }
+
+        [HttpGet("dishes")]
+        public ActionResult<IEnumerable<Dish>> GetDishes([FromQuery]int id)
+        {
+            return Ok(_service.GetDishes(id));
+        }
+
 
         [HttpPost("addRestaurant")]
         public ActionResult<string> PostRestaurant([FromBody] object restaurantJSON)

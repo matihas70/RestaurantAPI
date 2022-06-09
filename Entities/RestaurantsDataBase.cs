@@ -42,6 +42,33 @@ namespace RestaurantAPI
             }
         }
 
+        static public IEnumerable<Dish> connectAndGetDishes(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                Console.WriteLine("CONNECTED");
+
+                //checking if address already exist
+                string sql = $"SELECT * FROM Dishes WHERE restaurant = {id}";
+
+                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        List<Dish> dishes = new List<Dish>();
+
+                        while (reader.Read())
+                        {
+                            dishes.Add(new Dish(int.Parse(reader["dish_id"].ToString()), reader["name"].ToString(), reader["type"].ToString(), decimal.Parse(reader["price"].ToString())));
+                        }
+
+                        return dishes;
+                    }
+                }
+            }
+        }
+
         static public string connectAndPostRestaurant(Address address, Restaurant restaurant)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))

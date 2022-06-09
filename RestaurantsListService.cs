@@ -11,9 +11,14 @@ namespace RestaurantAPI
             return result;
         }
 
-        public IEnumerable<Restaurant> Get2()
+        public IEnumerable<Restaurant> GetRestaurants()
         {
             return RestaurantsDataBase.GetRestaurantsList();
+        }
+
+        public IEnumerable<Dish> GetDishes(int id)
+        {
+            return RestaurantsDataBase.connectAndGetDishes(id);
         }
 
         public string PostRestaurant(Address address, Restaurant restaurant)
@@ -28,7 +33,7 @@ namespace RestaurantAPI
 
         public string DeleteRestaurant(int id)
         {
-            return RestaurantsDataBase.connectAndDelete(id, "Restaurant");
+            return RestaurantsDataBase.connectAndDelete(id, "restaurant");
         }
         public string DeleteDish(int id)
         {
