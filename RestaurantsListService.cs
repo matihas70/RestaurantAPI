@@ -21,21 +21,21 @@ namespace RestaurantAPI
             return RestaurantsDataBase.connectAndGetDishes(id);
         }
 
-        public string PostRestaurant(Address address, Restaurant restaurant)
+        public bool PostRestaurant(Address address, Restaurant restaurant)
         {
            return RestaurantsDataBase.connectAndPostRestaurant(address, restaurant);
         }
 
-        public string PostDish(Dish dish, int id)
+        public bool PostDish(Dish dish, int id)
         {
             return RestaurantsDataBase.connectAndPostDish(dish, id);
         }
 
-        public string DeleteRestaurant(int id)
+        public bool DeleteRestaurant(int id)
         {
             return RestaurantsDataBase.connectAndDelete(id, "restaurant");
         }
-        public string DeleteDish(int id)
+        public bool DeleteDish(int id)
         {
             return RestaurantsDataBase.connectAndDelete(id, "dish");
         }

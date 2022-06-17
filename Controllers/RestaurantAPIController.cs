@@ -64,9 +64,14 @@ namespace RestaurantAPI
                 return BadRequest("Podaj poprawne dane restauracji");
             }
 
-            string result = _service.PostRestaurant(address, restaurant);
+            bool isCreated = _service.PostRestaurant(address, restaurant);
 
-            return Ok(result);
+            if (isCreated)
+            {
+                return Ok("Utworzono restaurancję");
+            }
+
+            return BadRequest("Restauracja o tym adresie już istnieje");
         }
 
 
@@ -83,21 +88,42 @@ namespace RestaurantAPI
             {
                 return BadRequest("Podaj poprawne id Restauracji");
             }
-            return Ok(_service.PostDish(dish, id));
+            bool isAdded = _service.PostDish(dish, id);
+
+            if (isAdded)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
 
         [HttpDelete("removeRestaurant")]
         public ActionResult<string> DeleteRestaurant([FromQuery] int id)
         {
-            return Ok(_service.DeleteRestaurant(id));
+            bool isDeleted = _service.DeleteRestaurant(id);
+
+            if (isDeleted)
+            {
+                return NoContent();
+            }
+
+            return NotFound();
         }
 
 
         [HttpDelete("removeDish")]
         public ActionResult<string> DeleteDish([FromQuery] int id)
         {
-            return Ok(_service.DeleteDish(id));
+            bool isDeleted = _service.DeleteDish(id);
+
+            if (isDeleted)
+            {
+                return NoContent();
+            }
+
+            return NotFound();
         }
     }
 }

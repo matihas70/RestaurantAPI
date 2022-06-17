@@ -69,7 +69,7 @@ namespace RestaurantAPI
             }
         }
 
-        static public string connectAndPostRestaurant(Address address, Restaurant restaurant)
+        static public bool connectAndPostRestaurant(Address address, Restaurant restaurant)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -85,7 +85,7 @@ namespace RestaurantAPI
                     {
                         if (reader.Read())
                         {
-                            return "Podany adres już istnieje";
+                            return false;
                         }
                     }
                 }
@@ -111,13 +111,13 @@ namespace RestaurantAPI
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        return "Dodano restauracje";
+                        return true;
                     }
                 }
             }
         }
 
-        static public string connectAndPostDish(Dish dish, int id)
+        static public bool connectAndPostDish(Dish dish, int id)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -132,7 +132,7 @@ namespace RestaurantAPI
                     {
                         if (reader.Read() == false)
                         {
-                            return "Nie ma restauracji o tym id";
+                            return false; //Nie ma restauracji o tym id
                         }
                     }
                 }
@@ -145,7 +145,7 @@ namespace RestaurantAPI
                     {
                         if (reader.Read())
                         {
-                            return "W tej restauracji jest już ta potrawa";
+                            return false; //W tej restauracji jest już ta potrawa
                         }
                     }
                 }
@@ -159,13 +159,13 @@ namespace RestaurantAPI
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        return "Dodano potrawę";
+                        return true;
                     }
                 }
             }
         }
 
-        static public string connectAndDelete(int id, string toDelete)
+        static public bool connectAndDelete(int id, string toDelete)
         {
             toDelete = toDelete.ToLower();
 
@@ -193,7 +193,7 @@ namespace RestaurantAPI
                     {
                         if (reader.Read() == false)
                         {
-                            return $"Nie ma {describe[2]} o tym id";
+                            return false;
                         }
                     }
                 }
@@ -204,7 +204,7 @@ namespace RestaurantAPI
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        return $"Usunięto {describe[3]}";
+                        return true;
                     }
                 }
             }
