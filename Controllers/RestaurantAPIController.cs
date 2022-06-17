@@ -7,12 +7,10 @@ namespace RestaurantAPI
     [Route("[controller]")]
     public class RestaurantAPIController : Controller
     {
-        private readonly ILogger<RestaurantAPIController> _logger;
         private readonly IRestaurantsListService _service;
 
         public RestaurantAPIController(ILogger<RestaurantAPIController> logger, IRestaurantsListService service)
         {
-            _logger = logger;
             _service = service;
         }
 
@@ -35,7 +33,14 @@ namespace RestaurantAPI
         [HttpGet("dishes")]
         public ActionResult<IEnumerable<Dish>> GetDishes([FromQuery]int id)
         {
-            return Ok(_service.GetDishes(id));
+            var dishes = _service.GetDishes(id);
+
+            if(dishes.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(dishes);
         }
 
 
