@@ -9,7 +9,7 @@ namespace RestaurantAPI
     {
         private readonly IRestaurantsListService _service;
 
-        public RestaurantAPIController(ILogger<RestaurantAPIController> logger, IRestaurantsListService service)
+        public RestaurantAPIController(IRestaurantsListService service)
         {
             _service = service;
         }
