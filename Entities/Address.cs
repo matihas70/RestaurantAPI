@@ -1,4 +1,4 @@
-﻿namespace RestaurantAPI
+﻿namespace RestaurantAPI.Entities
 {
     public class Address
     {

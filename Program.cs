@@ -1,4 +1,7 @@
 using RestaurantAPI;
+using AutoMapper;
+using System.Reflection;
+using RestaurantAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 //Register services
-builder.Services.AddScoped<IRestaurantsListService, RestaurantsListService>();
+
+builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+builder.Services.AddScoped<IDishService, DishService>();
 
 var app = builder.Build();
 
@@ -22,8 +27,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-app.UseAuthorization();
 
 app.MapControllers();
 
