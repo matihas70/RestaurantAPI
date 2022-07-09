@@ -56,11 +56,13 @@ Controllers:
 2. Dish (Route: /<restaurant_id>/dish>):
   
   - GET:
-    - default: download all dishes from the restaurant by id in main route. SQL Procedure:  
+    - default: download all dishes from the restaurant by id from main route. SQL Procedure:  
     ![image](https://user-images.githubusercontent.com/104222527/177629815-3e50bf1b-d189-42d0-bf79-605cf52b78c5.png)
     
   - POST:
     - default: Create dish by informations from body request. SQL Procedure:  
     ![image](https://user-images.githubusercontent.com/104222527/177630361-5e1f8f1f-5ddc-4136-8b1b-7d7c25bcbc0e.png)
     
-    WILL BE COMPLETED SOON
+  - DELETE:
+    - /<dish_id>: Remove dish by id. SQL Procedure:  
+    ![image](https://user-images.githubusercontent.com/104222527/178098177-15807b58-2380-4035-a955-97a9dc8fe6a1.png)
