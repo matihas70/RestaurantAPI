@@ -6,7 +6,7 @@ using RestaurantAPI.Outputs;
 namespace RestaurantAPI.Controllers
 {
     [ApiController]
-    [Route("{restaurantId}/dish")]
+    [Route("restaurant{restaurantId}/dish")]
     public class DishController : Controller
     {
         private readonly IDishService _service;
@@ -48,7 +48,7 @@ namespace RestaurantAPI.Controllers
                 return BadRequest();
             }
 
-            return Created($"{restaurantId}/dish/{id}", null);
+            return Created($"restaurant/{restaurantId}/dish/{id}", null);
         }
 
         [HttpPut("{id}")]
