@@ -1,0 +1,26 @@
+﻿namespace RestaurantAPI.Middleware
+{
+    public class ErrorHandlingMiddleware : IMiddleware
+    {
+        private readonly ILogger _logger;
+        public ErrorHandlingMiddleware(ILogger logger)
+        {
+            _logger = logger;
+        }
+
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        {
+            try
+            {
+                await next.Invoke(context);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, e.Message);
+
+                context.Response.StatusCode = 500;
+                await context.Response.WriteAsync("Something went wrong");
+            }
+        }
+    }
+}
