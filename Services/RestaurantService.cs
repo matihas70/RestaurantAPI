@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 using RestaurantAPI.Models;
+using RestaurantAPI.Exceptions;
 
 namespace RestaurantAPI.Services
 {
@@ -9,8 +10,8 @@ namespace RestaurantAPI.Services
         public IEnumerable<RestaurantDto> GetAllRestaurants();
         public RestaurantDto GetRestaurant(int id);
         public int AddRestaurant(AddRestaurantDto dto);
-        public bool UpdateAddress(int id, UpdateAddressDto dto);
-        public bool DeleteRestaurant(int id);
+        public void UpdateAddress(int id, UpdateAddressDto dto);
+        public void DeleteRestaurant(int id);
     }
 
     public class RestaurantService : IRestaurantService
@@ -80,7 +81,7 @@ namespace RestaurantAPI.Services
                 return restaurant;
             }
 
-            return null;
+            throw new NotFoundException("Restaurant not found");
         }
 
         public int AddRestaurant(AddRestaurantDto dto)
@@ -110,7 +111,7 @@ namespace RestaurantAPI.Services
             return id;
         }
 
-        public bool UpdateAddress(int id, UpdateAddressDto dto)
+        public void UpdateAddress(int id, UpdateAddressDto dto)
         {
             bool isUpdated;
 
@@ -132,10 +133,11 @@ namespace RestaurantAPI.Services
                 isUpdated = Convert.ToBoolean(cmd.Parameters["@isUpdated"].Value);
             }
 
-            return isUpdated;
+            if(!isUpdated)
+                throw new NotFoundException("Restaurant not found");
         }
 
-        public bool DeleteRestaurant(int id)
+        public void DeleteRestaurant(int id)
         {
             bool isDeleted;
 
@@ -154,7 +156,8 @@ namespace RestaurantAPI.Services
                 isDeleted = Convert.ToBoolean(cmd.Parameters["@isDeleted"].Value);
             }
 
-            return isDeleted;
+            if(!isDeleted)
+                throw new NotFoundException("Restaurant not found");
         }
     }
 }

@@ -4,8 +4,8 @@ using RestaurantAPI.Services;
 
 namespace RestaurantAPI
 {
-    [ApiController]
     [Route("restaurant")]
+    [ApiController]
     public class RestaurantController : Controller
     {
         private readonly IRestaurantService _service;
@@ -28,10 +28,6 @@ namespace RestaurantAPI
         {
             var restaurant = _service.GetRestaurant(id);
 
-            if(restaurant == null)
-            {
-                return NotFound();
-            }
             return Ok(restaurant);
         }
 
@@ -39,11 +35,6 @@ namespace RestaurantAPI
         [HttpPost]
         public ActionResult AddRestaurant([FromBody] AddRestaurantDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             int id = _service.AddRestaurant(dto);
 
             if(id == 0)
@@ -56,32 +47,18 @@ namespace RestaurantAPI
         [HttpPut("{id}")]
         public ActionResult UpdateAddress([FromRoute] int id, [FromBody] UpdateAddressDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            _service.UpdateAddress(id, dto);
 
-            bool isUpdated = _service.UpdateAddress(id, dto);
-
-            if (isUpdated)
-            {
-                return Ok();
-            }
-
-            return NotFound();
+            return Ok();
         }
 
         [HttpDelete("{id}")]
         public ActionResult DeleteRestaurant([FromRoute] int id)
         {
-            bool isDeleted = _service.DeleteRestaurant(id);
+            _service.DeleteRestaurant(id);
 
-            if (isDeleted)
-            {
-                return NoContent();
-            }
+            return NoContent();
 
-            return NotFound();
         }
     }
 }
