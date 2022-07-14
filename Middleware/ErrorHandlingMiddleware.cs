@@ -21,6 +21,11 @@ namespace RestaurantAPI.Middleware
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync(notFound.Message);
             }
+            catch(AlreadyExistException alreadyExist)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(alreadyExist.Message);
+            }
             catch(Exception e)
             {
                 _logger.LogError(e, e.Message);
