@@ -2,6 +2,8 @@
 using System.Data.SqlClient;
 using RestaurantAPI.Entities;
 using RestaurantAPI.Models;
+using RestaurantAPI.Exceptions;
+using RestaurantAPI.Outputs;
 
 namespace RestaurantAPI.Services
 {
@@ -9,8 +11,8 @@ namespace RestaurantAPI.Services
     {
         public IEnumerable<DishDto> GetAllDishes(int restaurantId);
         public int AddDish(int restaurantId, AddDishDto dto);
-        public bool UpdatePrice(int id, UpdatePriceDto dto);
-        public bool DeleteDish(int id);
+        public void UpdatePrice(int id, UpdatePriceDto dto);
+        public void DeleteDish(int id);
     }
 
     public class DishService : IDishService
@@ -39,7 +41,7 @@ namespace RestaurantAPI.Services
             }
             if(DTable.Rows.Count == 0)
             {
-                return null;
+                throw new NotFoundException("This restaurant hasn't any dish");
             }
 
             List<DishDto> dishes = new List<DishDto>();
@@ -80,10 +82,19 @@ namespace RestaurantAPI.Services
                 id = (int)cmd.Parameters["@id"].Value;
             }
 
+            if(id == (int)AddDishOutput.RestaurantNotFound)
+            {
+                throw new NotFoundException("Restaurant not found");
+            }
+            else if(id == (int)AddDishOutput.DishAlreadyExist)
+            {
+                throw new AlreadyExistException("Dish with this name already exist");
+            }
+
             return id;
         }
 
-        public bool UpdatePrice(int id, UpdatePriceDto dto)
+        public void UpdatePrice(int id, UpdatePriceDto dto)
         {
             bool isUpdated;
 
@@ -104,10 +115,14 @@ namespace RestaurantAPI.Services
                 isUpdated = Convert.ToBoolean(cmd.Parameters["@isUpdated"].Value);
             }
 
-            return isUpdated;
+            if(!isUpdated)
+            {
+                throw new NotFoundException("Dish not found");
+            }
+
         }
 
-        public bool DeleteDish(int id)
+        public void DeleteDish(int id)
         {
             bool isDeleted;
 
@@ -127,7 +142,10 @@ namespace RestaurantAPI.Services
                 isDeleted = Convert.ToBoolean(cmd.Parameters["@isDeleted"].Value);
             }
 
-            return isDeleted;
+            if (!isDeleted)
+            {
+                throw new NotFoundException("Dish not found");
+            }
         }
     }
 }
